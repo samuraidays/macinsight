@@ -26,6 +26,6 @@ type OSInfo struct {
 type Report struct {
 	Version string        `json:"version"` // macinsight のバージョン
 	Host    HostInfo      `json:"host"`
-	Score   int           `json:"score"`   // 0〜100
+	Score   int           `json:"score"` // 0〜100
 	Checks  []CheckResult `json:"checks"`
 }
