@@ -25,7 +25,7 @@ func main() {
 	case "audit":
 		runAudit(os.Args[2:])
 	case "list-checks":
-		fmt.Println("sip,gatekeeper,filevault,firewall")
+		fmt.Println("sip,gatekeeper,filevault,firewall,autologin,osupdate")
 	case "version":
 		fmt.Println(version)
 	default:

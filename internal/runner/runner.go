@@ -26,12 +26,14 @@ func Run(version string, opt Option) types.Report {
 		OS:       osinfo(),
 	}
 
-	// v0.1: 代表4チェックのみ登録
+	// v0.1: 代表6チェックを登録
 	registry := map[string]func(context.Context) types.CheckResult{
 		"gatekeeper": checks.Gatekeeper,
 		"filevault":  checks.FileVault,
 		"sip":        checks.SIP,
 		"firewall":   checks.Firewall,
+		"autologin":  checks.AutoLogin,
+		"osupdate":   checks.OSUpdate,
 	}
 
 	results := make([]types.CheckResult, 0, len(registry))
