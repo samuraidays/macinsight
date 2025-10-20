@@ -10,9 +10,9 @@ import (
 )
 
 // SIP（System Integrity Protection）状態
-// 重みは 15 点
+// 重みは 20 点
 func SIP(ctx context.Context) types.CheckResult {
-	const weight = 15
+	const weight = 20
 
 	res := executil.Run(ctx, 3*time.Second, "/usr/bin/csrutil", "status")
 	ev := map[string]string{"csrutil": strings.TrimSpace(res.Stdout)}

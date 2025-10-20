@@ -10,9 +10,9 @@ import (
 )
 
 // Gatekeeper が有効かを spctl --status で確認
-// 重みは 15 点（pass=15, fail=0, unknown=7）
+// 重みは 20 点（pass=20, fail=0, unknown=10）
 func Gatekeeper(ctx context.Context) types.CheckResult {
-	const weight = 15
+	const weight = 20
 
 	res := executil.Run(ctx, 3*time.Second, "/usr/sbin/spctl", "--status")
 	ev := map[string]string{"spctl_status": strings.TrimSpace(res.Stdout)}
