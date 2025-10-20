@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/samuraidays/macinsight/internal/executil"
 	"github.com/samuraidays/macinsight/pkg/types"
 )
 
@@ -15,14 +14,14 @@ func OSUpdate(ctx context.Context) types.CheckResult {
 	const weight = 20
 
 	// 現在のOSバージョン（参考情報としてevidenceに載せる）
-	swVersRes := executil.Run(ctx, 3*time.Second, "/usr/bin/sw_vers", "-productVersion")
+    swVersRes := runCommand(ctx, 3*time.Second, "/usr/bin/sw_vers", "-productVersion")
 	currentVersion := strings.TrimSpace(swVersRes.Stdout)
 	if currentVersion == "" {
 		currentVersion = "unknown"
 	}
 
 	// 利用可能な更新をチェック（--no-scanでキャッシュを使用、高速化）
-	updateRes := executil.Run(ctx, 8*time.Second, "/usr/sbin/softwareupdate", "-l", "--no-scan")
+    updateRes := runCommand(ctx, 8*time.Second, "/usr/sbin/softwareupdate", "-l", "--no-scan")
 
 	ev := map[string]string{
 		"version": currentVersion,

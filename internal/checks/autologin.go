@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/samuraidays/macinsight/internal/executil"
 	"github.com/samuraidays/macinsight/pkg/types"
 )
 
@@ -15,7 +14,7 @@ func AutoLogin(ctx context.Context) types.CheckResult {
 	const weight = 10
 
 	// 自動ログインの設定を確認
-	res := executil.Run(ctx, 3*time.Second, "/usr/bin/defaults", "read", "/Library/Preferences/com.apple.loginwindow", "autoLoginUser")
+    res := runCommand(ctx, 3*time.Second, "/usr/bin/defaults", "read", "/Library/Preferences/com.apple.loginwindow", "autoLoginUser")
 	ev := map[string]string{"autoLoginUser": strings.TrimSpace(res.Stdout)}
 
 	cr := types.CheckResult{

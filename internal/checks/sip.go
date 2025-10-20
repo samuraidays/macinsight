@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/samuraidays/macinsight/internal/executil"
 	"github.com/samuraidays/macinsight/pkg/types"
 )
 
@@ -14,7 +13,7 @@ import (
 func SIP(ctx context.Context) types.CheckResult {
 	const weight = 20
 
-	res := executil.Run(ctx, 3*time.Second, "/usr/bin/csrutil", "status")
+    res := runCommand(ctx, 3*time.Second, "/usr/bin/csrutil", "status")
 	ev := map[string]string{"csrutil": strings.TrimSpace(res.Stdout)}
 
 	cr := types.CheckResult{

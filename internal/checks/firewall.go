@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/samuraidays/macinsight/internal/executil"
 	"github.com/samuraidays/macinsight/pkg/types"
 )
 
@@ -14,7 +13,7 @@ import (
 func Firewall(ctx context.Context) types.CheckResult {
 	const weight = 10
 
-	res := executil.Run(ctx, 3*time.Second, "/usr/libexec/ApplicationFirewall/socketfilterfw", "--getglobalstate")
+    res := runCommand(ctx, 3*time.Second, "/usr/libexec/ApplicationFirewall/socketfilterfw", "--getglobalstate")
 	ev := map[string]string{"socketfilterfw": strings.TrimSpace(res.Stdout)}
 
 	cr := types.CheckResult{
