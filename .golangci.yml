@@ -1,0 +1,18 @@
+# .golangci.yml
+run:
+  timeout: 3m
+  tests: true
+
+linters:
+  disable-all: true
+  enable:
+    - errcheck         # エラーハンドリング忘れ
+    - govet            # go vet 相当の基本チェック
+    - ineffassign      # 代入したのに使ってない変数
+    - unused           # 未使用コード
+    - gosimple         # 冗長な書き方の指摘
+    - staticcheck      # バグっぽい箇所
+    - typecheck        # 型チェック
+
+issues:
+  exclude-use-default: false
