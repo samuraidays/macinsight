@@ -59,6 +59,11 @@ install-lint:
 # Run all checks
 check: fmt lint test
 
+# Generate JSON schema
+schema:
+	@echo "Generating JSON schema..."
+	./bin/$(BINARY_NAME) schema --output schema/report.json
+
 # Show help
 help:
 	@echo "Available targets:"
@@ -71,6 +76,7 @@ help:
 	@echo "  install      - Install binary to GOPATH/bin"
 	@echo "  install-lint - Install golangci-lint"
 	@echo "  check        - Run fmt, lint, and test"
+	@echo "  schema       - Generate JSON schema"
 	@echo "  help         - Show this help"
 	@echo ""
 	@echo "Current version: $(VERSION)"
