@@ -9,6 +9,7 @@ import (
 
 	"github.com/samuraidays/macinsight/internal/output"
 	"github.com/samuraidays/macinsight/internal/runner"
+	"github.com/samuraidays/macinsight/internal/schema"
 )
 
 // ldflags で埋め込む用（go build -ldflags "-X main.version=v0.1.0"）
@@ -20,7 +21,7 @@ func main() {
 		return
 	}
 
-	// サブコマンド：audit / list-checks / version
+	// サブコマンド：audit / list-checks / version / schema
 	switch os.Args[1] {
 	case "audit":
 		runAudit(os.Args[2:])
@@ -28,6 +29,8 @@ func main() {
 		fmt.Println("sip,gatekeeper,filevault,firewall,autologin,osupdate")
 	case "version":
 		fmt.Println(version)
+	case "schema":
+		runSchema(os.Args[2:])
 	default:
 		usage()
 	}
@@ -40,10 +43,12 @@ Usage:
   macinsight audit [--json] [--only <checks>] [--exclude <checks>] [--timeout 3s]
   macinsight list-checks
   macinsight version
+  macinsight schema [--output <file>]
 
 Examples:
   macinsight audit
   macinsight audit --json --only filevault,gatekeeper
+  macinsight schema --output schema.json
 `)
 }
 
@@ -94,4 +99,42 @@ func toSet(csv string) map[string]struct{} {
 		}
 	}
 	return m
+}
+
+func runSchema(args []string) {
+	// フラグ定義
+	fs := flag.NewFlagSet("schema", flag.ExitOnError)
+	var outputFile string
+	fs.StringVar(&outputFile, "output", "", "output file path (default: stdout)")
+	_ = fs.Parse(args)
+
+	// スキーマ生成
+	generator := &schema.JSONSchemaGenerator{}
+
+	if outputFile != "" {
+		// ファイルに出力
+		file, err := os.Create(outputFile)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error creating file %s: %v\n", outputFile, err)
+			os.Exit(1)
+		}
+		defer func() {
+			if closeErr := file.Close(); closeErr != nil {
+				fmt.Fprintf(os.Stderr, "Error closing file %s: %v\n", outputFile, closeErr)
+			}
+		}()
+
+		if err := generator.WriteSchema(file); err != nil {
+			fmt.Fprintf(os.Stderr, "Error writing schema: %v\n", err)
+			os.Exit(1)
+		}
+
+		fmt.Printf("JSON schema written to %s\n", outputFile)
+	} else {
+		// 標準出力に出力
+		if err := generator.WriteSchema(os.Stdout); err != nil {
+			fmt.Fprintf(os.Stderr, "Error writing schema: %v\n", err)
+			os.Exit(1)
+		}
+	}
 }
