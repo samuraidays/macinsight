@@ -54,6 +54,10 @@ make install
 
 # バージョン表示（Git情報に基づく動的バージョン）
 ./bin/macinsight version
+
+# JSONスキーマの生成
+./bin/macinsight schema
+./bin/macinsight schema --output schema.json
 ```
 
 ## 利用可能なチェック
@@ -77,6 +81,36 @@ OS updates current ... Evidence: version=26.0.1
 
 - テーブル（デフォルト）: 人間に読みやすい表形式
 - JSON（`--json`）: 機械可読なJSON
+
+## JSONスキーマ
+
+macinsightのJSON出力は固定スキーマに準拠しています。
+
+### スキーマ生成
+
+```bash
+# スキーマを標準出力に表示
+./bin/macinsight schema
+
+# スキーマをファイルに保存
+./bin/macinsight schema --output schema.json
+
+# Makefileでスキーマ生成
+make schema
+```
+
+### スキーマの特徴
+
+- **厳密な型定義**: 各フィールドの型と制約を定義
+- **バリデーション**: スコア範囲、ステータス値、チェックIDの検証
+- **バージョン管理**: スキーマのバージョン管理と互換性保証
+- **ドキュメント**: 各フィールドの説明と例
+
+### スキーマファイル
+
+- `schema/report.json`: 固定スキーマファイル
+- JSON Schema Draft 2020-12準拠
+- 自動生成とバリデーション機能付き
 
 ## テスト
 
