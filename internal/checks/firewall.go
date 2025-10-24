@@ -13,7 +13,7 @@ import (
 func Firewall(ctx context.Context) types.CheckResult {
 	const weight = 10
 
-    res := runCommand(ctx, 3*time.Second, "/usr/libexec/ApplicationFirewall/socketfilterfw", "--getglobalstate")
+	res := runCommand(ctx, 3*time.Second, "/usr/libexec/ApplicationFirewall/socketfilterfw", "--getglobalstate")
 	ev := map[string]string{"socketfilterfw": strings.TrimSpace(res.Stdout)}
 
 	cr := types.CheckResult{

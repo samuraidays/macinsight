@@ -1,6 +1,6 @@
 module github.com/samuraidays/macinsight
 
-go 1.25.2
+go 1.23
 
 require github.com/jedib0t/go-pretty/v6 v6.6.8
 
