@@ -6,15 +6,15 @@ import (
 )
 
 func TestToSet(t *testing.T) {
-	cases := []struct{
-		in string
+	cases := []struct {
+		in   string
 		want map[string]struct{}
 	}{
 		{"", map[string]struct{}{}},
-		{"a", map[string]struct{}{"a":{}}},
-		{"a,b", map[string]struct{}{"a":{}, "b":{}}},
-		{" a , b ", map[string]struct{}{"a":{}, "b":{}}},
-		{",,a,,", map[string]struct{}{"a":{}}},
+		{"a", map[string]struct{}{"a": {}}},
+		{"a,b", map[string]struct{}{"a": {}, "b": {}}},
+		{" a , b ", map[string]struct{}{"a": {}, "b": {}}},
+		{",,a,,", map[string]struct{}{"a": {}}},
 	}
 	for _, c := range cases {
 		got := toSet(c.in)

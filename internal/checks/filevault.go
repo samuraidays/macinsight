@@ -13,7 +13,7 @@ import (
 func FileVault(ctx context.Context) types.CheckResult {
 	const weight = 20
 
-    res := runCommand(ctx, 3*time.Second, "/usr/bin/fdesetup", "status")
+	res := runCommand(ctx, 3*time.Second, "/usr/bin/fdesetup", "status")
 	ev := map[string]string{"fdesetup": strings.TrimSpace(res.Stdout)}
 
 	cr := types.CheckResult{

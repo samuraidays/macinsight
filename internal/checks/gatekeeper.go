@@ -13,7 +13,7 @@ import (
 func Gatekeeper(ctx context.Context) types.CheckResult {
 	const weight = 20
 
-    res := runCommand(ctx, 3*time.Second, "/usr/sbin/spctl", "--status")
+	res := runCommand(ctx, 3*time.Second, "/usr/sbin/spctl", "--status")
 	ev := map[string]string{"spctl_status": strings.TrimSpace(res.Stdout)}
 
 	cr := types.CheckResult{

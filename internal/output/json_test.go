@@ -11,9 +11,9 @@ import (
 func TestWriteJSON_EncodesReport(t *testing.T) {
 	rep := types.Report{
 		Version: "vtest",
-		Host: types.HostInfo{Hostname: "host", OS: types.OSInfo{Product: "macOS", Version: "26.0.1", Build: "23A344"}},
-		Score:  42,
-		Checks: []types.CheckResult{{ID: "sip", Title: "System Integrity Protection enabled", Status: "pass", Score: 20}},
+		Host:    types.HostInfo{Hostname: "host", OS: types.OSInfo{Product: "macOS", Version: "26.0.1", Build: "23A344"}},
+		Score:   42,
+		Checks:  []types.CheckResult{{ID: "sip", Title: "System Integrity Protection enabled", Status: "pass", Score: 20}},
 	}
 
 	var buf bytes.Buffer
